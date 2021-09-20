@@ -19,6 +19,7 @@ gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
+gem "devise", "~> 4.8"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -55,6 +56,7 @@ group :test do
   gem "webdrivers"
   gem "shoulda-matchers", "~> 5.0"
   gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
+  gem "launchy", "~> 2.5"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
