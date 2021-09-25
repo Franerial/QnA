@@ -140,6 +140,7 @@ RSpec.describe QuestionsController, type: :controller do
     it "redirects to index" do
       delete :destroy, params: { id: question }
       expect(response).to redirect_to questions_path
+      expect(flash[:notice]).to be_present
     end
   end
 end
