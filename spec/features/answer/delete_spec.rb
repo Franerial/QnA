@@ -14,7 +14,7 @@ feature "User can delete his answer" do
       end
 
       scenario "can delete" do
-        expect(page).to have_content "Delete answer"
+        expect(page).to have_link "Delete answer"
 
         click_on "Delete answer"
 
@@ -34,7 +34,7 @@ feature "User can delete his answer" do
       end
 
       scenario "can't delete" do
-        expect(page).not_to have_content "Delete answer"
+        expect(page).not_to have_link "Delete answer"
       end
     end
   end
@@ -45,7 +45,7 @@ feature "User can delete his answer" do
 
     background { visit question_path(question) }
     scenario "can't delete" do
-      expect(page).not_to have_content "Delete answer"
+      expect(page).not_to have_link "Delete answer"
     end
   end
 end

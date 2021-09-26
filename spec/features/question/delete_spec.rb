@@ -12,7 +12,7 @@ feature "User can delete his question" do
       end
 
       scenario "can delete" do
-        expect(page).to have_content "Delete"
+        expect(page).to have_link "Delete"
         click_on "Delete"
 
         expect(page).to have_content "Your question was successfully deleted."
@@ -29,7 +29,7 @@ feature "User can delete his question" do
       end
 
       scenario "can't delete" do
-        expect(page).not_to have_content("Delete")
+        expect(page).not_to have_link "Delete"
       end
     end
   end
@@ -39,7 +39,7 @@ feature "User can delete his question" do
 
     scenario "can't delete" do
       visit question_path(question)
-      expect(page).not_to have_content("Delete")
+      expect(page).not_to have_link "Delete"
     end
   end
 end
