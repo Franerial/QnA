@@ -17,5 +17,5 @@ h2 Create new answer
 
 p= link_to 'Back to questions list', questions_path
 
-- if (user_signed_in?) && (@question.author.email == current_user.email)
+- if current_user&.author_of?(@question)
   p = link_to 'Delete', question_path(@question), method: :delete, data: { confirm: "Are you sure?" }

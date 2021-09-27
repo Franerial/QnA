@@ -152,6 +152,10 @@ RSpec.describe QuestionsController, type: :controller do
 
       before { login(user) }
 
+      it "question was not deleted" do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
       it "redirects to index" do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to questions_path
