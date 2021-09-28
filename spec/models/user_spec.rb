@@ -11,27 +11,17 @@ RSpec.describe User, type: :model do
 
     context "return true" do
       let(:question) { create(:question, author: user) }
-      let(:answer) { create(:answer, author: user) }
 
       it "user is the author of question" do
-        expect(user.author_of?(question)).to be(true)
-      end
-
-      it "user is author of answer" do
-        expect(user.author_of?(answer)).to be(true)
+        expect(user).to be_author_of(question)
       end
     end
 
     context "return false" do
       let(:question) { create(:question) }
-      let(:answer) { create(:answer) }
 
       it "user is not the author of question" do
         expect(user.author_of?(question)).to be(false)
-      end
-
-      it "user is not author of answer" do
-        expect(user.author_of?(answer)).to be(false)
       end
     end
   end
