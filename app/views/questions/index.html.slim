@@ -1,0 +1,13 @@
+p= link_to 'Ask question', new_question_path
+
+h2 Questions list
+
+table
+  tr
+    th
+      p Question title
+    th
+      p Question Body
+    th 
+      p View question
+  = render @questions
