@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
       let(:question) { create(:question) }
 
       it "user is not the author of question" do
-        expect(user.author_of?(question)).to be(false)
+        expect(user).not_to be_author_of(question)
       end
     end
   end
