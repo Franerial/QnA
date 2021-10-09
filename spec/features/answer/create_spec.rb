@@ -14,7 +14,7 @@ feature "User can create answer", %q{
       visit question_path(question)
     end
 
-    scenario "Create answer" do
+    scenario "Create answer", js: true do
       fill_in "Body", with: "Text text text"
       click_on "Create"
 
@@ -22,7 +22,7 @@ feature "User can create answer", %q{
       expect(page).to have_content "Text text text"
     end
 
-    scenario "Create answer with errors" do
+    scenario "Create answer with errors", js: true do
       click_on "Create"
       expect(page).to have_content "Body can't be blank"
     end
