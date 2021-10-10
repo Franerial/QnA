@@ -1,5 +1,7 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
-
+$('.notice').html('');
 <% if !@answer.errors.present? %>
-  $('.answers').children().html('<%= j render @question.answers %>');
+  $('#answer_body').val('');
+  $('#answer-li-<%= @answer.id%>').replaceWith('<%= j render @answer %>');
+  $('.notice').append('<%= flash[:notice] %>');
 <% end %>

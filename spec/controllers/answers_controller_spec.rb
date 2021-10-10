@@ -64,35 +64,53 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "PATCH #update" do
-    let(:user) { create(:user) }
-    let!(:answer) { create(:answer, author: user) }
+    context "User is the author of answer" do
+      let(:user) { create(:user) }
+      let!(:answer) { create(:answer, author: user) }
 
-    context "with valid attributes" do
-      it "changes answer attributes" do
-        patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
-        answer.reload
+      context "with valid attributes" do
+        it "changes answer attributes" do
+          patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+          answer.reload
 
-        expect(answer.body).to eq "new body"
+          expect(answer.body).to eq "new body"
+        end
+
+        it "renders update view" do
+          patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+
+          expect(response).to render_template :update
+        end
       end
 
-      it "renders update view" do
-        patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+      context "with invalid attributes" do
+        it "does not change answer attributes" do
+          expect do
+            patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+          end.to_not change(answer, :body)
+        end
 
-        expect(response).to render_template :update
+        it "renders update view" do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+
+          expect(response).to render_template :update
+        end
       end
     end
 
-    context "with invalid attributes" do
+    context "User is not the author of answer" do
+      let(:user) { create(:user) }
+      let!(:answer) { create(:answer) }
+
       it "does not change answer attributes" do
         expect do
           patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
         end.to_not change(answer, :body)
       end
 
-      it "renders update view" do
-        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
-
-        expect(response).to render_template :update
+      it "shows flash error message" do
+        patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+        expect(flash[:notice]).to be_present
       end
     end
   end

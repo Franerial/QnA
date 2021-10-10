@@ -15,7 +15,13 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      flash.now[:notice] = "Your answer successfully updated."
+    else
+      flash.now[:notice] = "You do not have permission to do that."
+    end
+
     @question = @answer.question
   end
 
