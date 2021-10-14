@@ -1,0 +1,11 @@
+$('.question-errors').html('<%= render 'shared/errors', resource: @question %>');
+$('.notice').html('');
+<% if !@question.errors.present? %>
+  $('form#edit-question-title-<%= @question.id %>').hide();
+  $('form#edit-question-body-<%= @question.id %>').hide();
+  $('.edit-question-title-link').show();
+  $('.edit-question-body-link').show();
+  $('#question-title-<%= @question.id %>').text('<%= @question.title.gsub("\n", '') %>');
+  $('#question-body-<%= @question.id %>').text('<%= @question.body.gsub("\n", '') %>');
+  $('.notice').append('<%= flash[:notice] %>');
+<% end %>

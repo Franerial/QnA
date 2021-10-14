@@ -4,6 +4,7 @@
 // that code so it'll be compiled.
 
 require("answer")
+require("question")
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"

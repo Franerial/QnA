@@ -1,4 +1,4 @@
-$('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
+$('.answer-errors-create').html('<%= render 'shared/errors', resource: @answer %>');
 $('.notice').html('');
 <% if @answer.persisted? %>
   $('textarea#answer_body').val('');
