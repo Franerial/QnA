@@ -179,4 +179,46 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe "PATCH #mark_as_best" do
+    let(:question) { create(:question) }
+    let (:answer) { create(:answer, question: question) }
+
+    context "User is the author of question" do
+      let (:user) { question.author }
+
+      before do
+        login(user)
+        patch :mark_as_best, params: { id: question, answer_id: answer }
+      end
+
+      it "should set best answer for question" do
+        question.reload
+        expect(question.best_answer).to eq answer
+      end
+
+      it "should redirect to question" do
+        expect(response).to redirect_to assigns(:question)
+      end
+    end
+
+    context "User is not the author of question" do
+      let (:user) { create(:user) }
+
+      before do
+        login(user)
+        patch :mark_as_best, params: { id: question, answer_id: answer }
+      end
+
+      it "should not set best answer for question" do
+        question.reload
+        expect(question.best_answer).to be nil
+      end
+
+      it "should redirect to question with notice" do
+        expect(question.set_best_answer(answer.id)).to eq nil
+        expect(flash[:notice]).to be_present
+      end
+    end
+  end
 end

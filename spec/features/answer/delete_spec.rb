@@ -13,10 +13,12 @@ feature "User can delete his answer" do
         visit question_path(question)
       end
 
-      scenario "can delete" do
+      scenario "can delete", js: true do
         expect(page).to have_link "Delete answer"
 
-        click_on "Delete answer"
+        accept_confirm do
+          click_on "Delete answer"
+        end
 
         expect(page).to have_content "Your answer was successfully deleted."
       end

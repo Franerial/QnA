@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :edit, :update, :destroy, :mark_as_best]
 
   def index
     @questions = Question.all
@@ -8,6 +8,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new(question: @question)
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   def new
@@ -42,6 +44,15 @@ class QuestionsController < ApplicationController
       redirect_to questions_path, notice: "Your question was successfully deleted."
     else
       redirect_to questions_path
+    end
+  end
+
+  def mark_as_best
+    if current_user.author_of?(@question)
+      @question.set_best_answer(params[:answer_id])
+      redirect_to @question
+    else
+      redirect_to @question, notice: "You do not have permission to do that."
     end
   end
 

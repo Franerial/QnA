@@ -19,10 +19,13 @@
       = f.submit 'Save'
 
 h2 = "Answers list"
-.answer-errors 
+.answer-errors
 .answers
   ol
-    = render @question.answers
+    - if @best_answer.present?
+      .best-answer
+        = render @best_answer
+    = render @other_answers
 
 h2 Create new answer
 .answer-errors-create
