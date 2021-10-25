@@ -1,16 +1,35 @@
-h1 Question title
-h3 = @question.title
-h1 Question body
-h3 = @question.body
+.question
+  .question-errors
+  h1 Question title
+  h3 id="question-title-#{@question.id}" = @question.title
+  - if current_user&.author_of?(@question)
+    p = link_to 'Edit title', "#", class: "edit-question-title-link", data: { question_id: @question.id }
+    = form_with model: @question, local: false, class: 'hidden', html: {id: "edit-question-title-#{@question.id}"} do |f|
+      = f.label :title
+      = f.text_area :title
+      = f.submit 'Save'
+
+  h1 Question body
+  h3 id="question-body-#{@question.id}" = @question.body
+  - if current_user&.author_of?(@question)
+    p = link_to 'Edit body', "#", class: "edit-question-body-link", data: { question_id: @question.id }
+    = form_with model: @question, local: false, class: 'hidden', html: {id: "edit-question-body-#{@question.id}"} do |f|
+      = f.label :body
+      = f.text_area :body
+      = f.submit 'Save'
 
 h2 = "Answers list"
-ol
-  = render @question.answers
+.answer-errors
+.answers
+  ol
+    - if @best_answer.present?
+      .best-answer
+        = render @best_answer
+    = render @other_answers
 
 h2 Create new answer
-= render 'shared/errors', resource: @answer
-
-= form_with model: [@question, @answer], local: true do |f|
+.answer-errors-create
+= form_with model: [@question, @answer], local: false do |f|
   = f.label :body
   = f.text_area :body
   = f.submit 'Create'

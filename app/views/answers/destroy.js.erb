@@ -1,0 +1,3 @@
+$('.notice').html('');
+$('#answer-li-<%= @answer.id %>').remove();
+$('.notice').append('<%= flash[:notice] %>');
