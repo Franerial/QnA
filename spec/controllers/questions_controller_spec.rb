@@ -216,7 +216,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it "should redirect to question with notice" do
-        expect(question.set_best_answer(answer.id)).to eq nil
+        expect(response).to redirect_to assigns(:question)
         expect(flash[:notice]).to be_present
       end
     end
