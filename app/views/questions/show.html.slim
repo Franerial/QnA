@@ -37,6 +37,9 @@ h2 Create new answer
 = form_with model: [@question, @answer], local: false do |f|
   = f.label :body
   = f.text_area :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true
   = f.submit 'Create'
 
 p= link_to 'Back to questions list', questions_path

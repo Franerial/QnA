@@ -9,3 +9,7 @@ li id="answer-li-#{answer.id}"
       = f.submit 'Save'
   - if current_user&.author_of?(@question)
     p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
+  - if answer.files.attached?
+    h4 = "Files attached:"
+    - answer.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
