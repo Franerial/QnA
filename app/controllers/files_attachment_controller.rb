@@ -10,6 +10,10 @@ class FilesAttachmentController < ApplicationController
       flash.now[:notice] = "You do not have permission to do that."
     end
 
-    redirect_to @file.record
+    if @file.record.instance_of?(Answer)
+      redirect_to @file.record.question
+    else
+      redirect_to @file.record
+    end
   end
 end
