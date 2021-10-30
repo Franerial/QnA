@@ -30,6 +30,8 @@ gem "jquery-rails", "~> 4.4"
 gem "bootsnap", ">= 1.4.4", require: false
 
 gem "slim-rails", "~> 3.3"
+
+gem 'google-cloud-storage', '~> 1.34', '>= 1.34.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
