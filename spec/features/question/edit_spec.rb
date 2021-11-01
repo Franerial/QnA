@@ -74,6 +74,20 @@ feature "User can edit his question", %q{
 
         expect(page).to have_content "Title can't be blank"
       end
+
+      scenario "edit question body with attached files", js: true do
+        click_on "Edit body"
+
+        within "#edit-question-body-#{question.id}" do
+          attach_file "Files", ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+          click_on "Save"
+        end
+
+        within ".question-files-list" do
+          expect(page).to have_link "rails_helper.rb"
+          expect(page).to have_link "spec_helper.rb"
+        end
+      end
     end
 
     describe "is not the author of question" do

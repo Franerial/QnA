@@ -6,6 +6,10 @@ li id="answer-li-#{answer.id}"
     = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
       = f.label :body
       = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true
       = f.submit 'Save'
   - if current_user&.author_of?(@question)
     p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
+  = render 'shared/attached_files', resource: answer
