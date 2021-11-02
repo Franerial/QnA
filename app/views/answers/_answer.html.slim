@@ -13,3 +13,5 @@ li id="answer-li-#{answer.id}"
   - if current_user&.author_of?(@question)
     p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
   = render 'shared/attached_files', resource: answer
+  .answer-links
+    = render 'shared/attached_links', resource: answer

@@ -25,10 +25,7 @@
     = render 'shared/attached_files', resource: @question
 
   .question-links
-    h4 Question links:
-    ul
-      - @question.links.each do |link|
-        li = link_to link.name, link.url
+    = render 'shared/attached_links', resource: @question
 
 h2 = "Answers list"
 .answer-errors
@@ -47,6 +44,15 @@ h2 Create new answer
   p
     = f.label :files
     = f.file_field :files, multiple: true
+  p Links: 
+  p 
+    = f.fields_for :links do |l|
+      p 
+        = l.label :name, 'Link name'
+        = l.text_field :name
+      p 
+        = l.label :url
+        = l.text_field :url
   = f.submit 'Create'
 
 p= link_to 'Back to questions list', questions_path

@@ -1,0 +1,5 @@
+- if resource.links.first
+  h4 = "Links attached:"
+  ul
+    - resource.links.each do |link|
+        li = link_to link.name, link.url
