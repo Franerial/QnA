@@ -24,6 +24,12 @@
   .question-files-list
     = render 'shared/attached_files', resource: @question
 
+  .question-links
+    h4 Question links:
+    ul
+      - @question.links.each do |link|
+        li = link_to link.name, link.url
+
 h2 = "Answers list"
 .answer-errors
 .answers
