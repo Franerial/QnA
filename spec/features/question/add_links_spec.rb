@@ -8,6 +8,7 @@ feature "User can add links to question", %q{
   given(:user) { create(:user) }
   given (:img_url) { "https://www.bl-school.com/blog/wp-content/uploads/2012/09/Koala.jpg" }
   given (:gem_url) { "https://rubygems.org/gems/cocoon" }
+  given (:gist_url) { "https://gist.github.com/Franerial/283ff0a5fd804d5f28c35047b01e305c" }
 
   background do
     sign_in(user)
@@ -44,5 +45,18 @@ feature "User can add links to question", %q{
     click_on "Ask"
 
     expect(page).to have_content "Links url is invalid"
+  end
+
+  scenario "User adds link to gist when asks question", js: true do
+    fill_in "Title", with: "Test question"
+    fill_in "Body", with: "Text text text"
+    fill_in "Link name", with: "Gist link"
+    fill_in "Url", with: gist_url
+
+    click_on "Ask"
+
+    within ".gist" do
+      expect(page).to have_content "How many messages will be printed to the console?"
+    end
   end
 end

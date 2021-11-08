@@ -8,6 +8,7 @@ feature "User can add links to answer", %q{
   given(:user) { create(:user) }
   given (:img_url) { "https://www.bl-school.com/blog/wp-content/uploads/2012/09/Koala.jpg" }
   given (:gem_url) { "https://rubygems.org/gems/cocoon" }
+  given (:gist_url) { "https://gist.github.com/Franerial/283ff0a5fd804d5f28c35047b01e305c" }
   given(:question) { create(:question) }
 
   background do
@@ -43,6 +44,19 @@ feature "User can add links to answer", %q{
 
     within ".answer-errors-create" do
       expect(page).to have_content "Links url is invalid"
+    end
+  end
+
+  scenario "User adds link to gist when create answer", js: true do
+    fill_in "Body", with: "Text text text"
+    fill_in "Link name", with: "Gist link"
+    fill_in "Url", with: gist_url
+
+    click_on "Create"
+
+    visit question_path(question)
+    within ".gist" do
+      expect(page).to have_content "How many messages will be printed to the console?"
     end
   end
 end
