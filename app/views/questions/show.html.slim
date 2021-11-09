@@ -19,6 +19,12 @@
       p
         = f.label :files
         = f.file_field :files, multiple: true
+      p Links: 
+      p 
+        = f.fields_for :links do |link|
+          = render 'link_fields', f: link
+        .links
+          = link_to_add_association 'Add link', f, :links
       = f.submit 'Save'
 
   .question-files-list
@@ -52,7 +58,7 @@ h2 Create new answer
       = link_to_add_association 'Add link', f, :links
   = f.submit 'Create'
 
-p= link_to 'Back to questions list', questions_path
+p = link_to 'Back to questions list', questions_path
 
 - if current_user&.author_of?(@question)
   p = link_to 'Delete', question_path(@question), method: :delete, data: { confirm: "Are you sure?" }
