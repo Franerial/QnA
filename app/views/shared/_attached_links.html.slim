@@ -6,3 +6,5 @@
             li = javascript_include_tag link.url+".js"
         - else 
             li = link_to link.name, link.url
+        = link_to 'Remove', link_path(link.id), method: :delete, data: { confirm: 'Are you sure?' } if current_user&.author_of?(link.linkable)
+          
