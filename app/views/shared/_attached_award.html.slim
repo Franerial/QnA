@@ -1,0 +1,8 @@
+- if resource
+  h4 = "Award attached:"
+  table
+    tr
+      td
+        = link_to resource.name, url_for(resource.image)
+      td
+        = image_tag "#{url_for(resource.image)}" 

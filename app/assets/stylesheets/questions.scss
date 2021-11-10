@@ -1,3 +1,22 @@
 // Place all the styles related to the Questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.question-award table {
+  border: 1px solid black;
+  width: 20%;
+}
+
+.question-award img {
+  width: 120px;
+  height: 120px;
+}
+
+.question-award table td 
+{
+  border: 1px solid black;
+  height: 180px; 
+  width: 300px;
+  text-align: center; 
+  vertical-align: middle;
+}

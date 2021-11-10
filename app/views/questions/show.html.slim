@@ -32,7 +32,9 @@
 
   .question-links
     = render 'shared/attached_links', resource: @question
-
+  .question-award
+    = render 'shared/attached_award', resource: @question.award
+    
 h2 = "Answers list"
 .answer-errors
 .answers
