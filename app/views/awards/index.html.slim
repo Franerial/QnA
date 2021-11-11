@@ -1,0 +1,14 @@
+h1 Awards list: 
+
+- if @awards.any?
+  table class="user-awards-table"
+    tr
+      th
+        p Award name
+      th
+        p Award image
+    = render @awards
+- else 
+  h3 No awards yet
+
+p = link_to 'Back to questions list', questions_path

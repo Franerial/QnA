@@ -191,6 +191,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe "PATCH #mark_as_best" do
     let(:question) { create(:question) }
     let (:answer) { create(:answer, question: question) }
+    let!(:award) { create(:award, question: question) }
 
     context "User is the author of question" do
       let (:user) { question.author }
@@ -203,6 +204,10 @@ RSpec.describe QuestionsController, type: :controller do
       it "should set best answer for question" do
         question.reload
         expect(question.best_answer).to eq answer
+      end
+
+      it "should give award to user if award exists" do
+        expect(user.awards.first).to eq award
       end
 
       it "should redirect to question" do

@@ -1,0 +1,29 @@
+// Place all the styles related to the awards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.user-awards-table {
+  border: 1px solid black;
+  width: 20%;
+  border-collapse: collapse;
+}
+
+.user-awards-table img {
+  width: 120px;
+  height: 120px;
+}
+
+.user-awards-table td 
+{
+  border: 1px solid black;
+  height: 180px; 
+  width: 300px;
+  text-align: center; 
+  vertical-align: middle;
+}
+
+.user-awards-table th
+{
+  border: 1px solid black;
+}
+
