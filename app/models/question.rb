@@ -13,6 +13,9 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   def set_best_answer(answer_id)
+    answer = Answer.find(answer_id)
+
     update!(best_answer_id: answer_id) if answer_ids.include?(answer_id&.to_i)
+    award.update(user: answer.author) if award
   end
 end

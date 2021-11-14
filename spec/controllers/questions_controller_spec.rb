@@ -206,8 +206,8 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.best_answer).to eq answer
       end
 
-      it "should give award to user if award exists" do
-        expect(user.awards.first).to eq award
+      it "should give award to author of answer if award exists" do
+        expect(answer.author.awards.first).to eq award
       end
 
       it "should redirect to question" do

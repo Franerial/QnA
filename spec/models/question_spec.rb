@@ -14,10 +14,12 @@ RSpec.describe Question, type: :model do
 
   describe "public methods" do
     let(:question) { create(:question_with_answers, answers_count: 5) }
+    let!(:award) { create(:award, question: question) }
 
-    it "should set best answer" do
+    it "should set best answer and give award" do
       question.set_best_answer(question.answers[2].id)
       expect(question.best_answer).to eq question.answers[2]
+      expect(question.answers[2].author.awards.first).to eq award
     end
   end
 

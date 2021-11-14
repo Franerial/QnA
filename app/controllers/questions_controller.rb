@@ -53,7 +53,6 @@ class QuestionsController < ApplicationController
   def mark_as_best
     if current_user.author_of?(@question)
       @question.set_best_answer(params[:answer_id])
-      @question.award.update(user: current_user) if @question.award
       redirect_to @question
     else
       redirect_to @question, notice: "You do not have permission to do that."
