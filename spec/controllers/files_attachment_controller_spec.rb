@@ -24,7 +24,7 @@ RSpec.describe FilesAttachmentController, type: :controller do
       end
     end
 
-    context "User is the author of file" do
+    context "User is not the author of file" do
       let (:user) { create(:user) }
 
       before { login(user) }

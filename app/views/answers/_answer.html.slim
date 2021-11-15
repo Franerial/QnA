@@ -9,7 +9,15 @@ li id="answer-li-#{answer.id}"
       p
         = f.label :files
         = f.file_field :files, multiple: true
+      p Links: 
+      p 
+        = f.fields_for :links do |link|
+          = render 'link_fields', f: link
+        .links
+          = link_to_add_association 'Add link', f, :links
       = f.submit 'Save'
   - if current_user&.author_of?(@question)
     p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
   = render 'shared/attached_files', resource: answer
+  .answer-links
+    = render 'shared/attached_links', resource: answer

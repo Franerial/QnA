@@ -32,6 +32,10 @@ RSpec.describe QuestionsController, type: :controller do
     it "assigns new answer to @answer" do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
+
+    it "assigns new link for answer" do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
   end
 
   describe "GET #new" do
@@ -41,6 +45,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it "assigns a new question to @question" do
       expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it "assigns new link for question" do
+      expect(assigns(:question).links.first).to be_a_new(Link)
     end
 
     it "renders new view" do
@@ -183,6 +191,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe "PATCH #mark_as_best" do
     let(:question) { create(:question) }
     let (:answer) { create(:answer, question: question) }
+    let!(:award) { create(:award, question: question) }
 
     context "User is the author of question" do
       let (:user) { question.author }
@@ -195,6 +204,10 @@ RSpec.describe QuestionsController, type: :controller do
       it "should set best answer for question" do
         question.reload
         expect(question.best_answer).to eq answer
+      end
+
+      it "should give award to author of answer if award exists" do
+        expect(answer.author.awards.first).to eq award
       end
 
       it "should redirect to question" do

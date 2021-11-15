@@ -8,5 +8,6 @@ $('.notice').html('');
   $('#question-title-<%= @question.id %>').text('<%= @question.title.gsub("\n", '') %>');
   $('#question-body-<%= @question.id %>').text('<%= @question.body.gsub("\n", '') %>');
   $('.question-files-list').html('<%= render 'shared/attached_files', resource: @question %>');
+  $('.question-links').html('<%= render 'shared/attached_links', resource: @question %>');
   $('.notice').append('<%= flash[:notice] %>');
 <% end %>

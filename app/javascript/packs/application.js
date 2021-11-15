@@ -5,6 +5,7 @@
 
 require("answer")
 require("question")
+require("@nathanvda/cocoon")
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
