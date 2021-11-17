@@ -21,3 +21,5 @@ li id="answer-li-#{answer.id}"
   = render 'shared/attached_files', resource: answer
   .answer-links
     = render 'shared/attached_links', resource: answer
+  .answer-vote 
+    = render 'shared/vote', resource: answer
