@@ -18,7 +18,7 @@ feature "User can delete his vote for question", %q{
     scenario "deletes his vote for question", js: true do
       within ".question-vote" do
         accept_confirm do
-          click_on "Cansel vote"
+          click_on "Cancel vote"
         end
 
         expect(page).to have_content "You have just canselled your vote!"

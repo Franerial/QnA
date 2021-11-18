@@ -21,11 +21,11 @@ $(document).on('turbolinks:load', function () {
     $('#answer-li-' + answer_id + ' h4.vote-rating').html('Current rating: ' + rating);
   })
 
-  $('.answers td.cansel-vote-link').on('ajax:success', function (event) {
+  $('.answers td.cancel-vote-link').on('ajax:success', function (event) {
     rating = event.detail[0].rating;
     answer_id = event.detail[0].votable_id;
 
-    $('#answer-li-' + answer_id + ' td.cansel-vote-link').html('You have just canselled your vote!')
+    $('#answer-li-' + answer_id + ' td.cancel-vote-link').html('You have just canselled your vote!')
     $('#answer-li-' + answer_id + ' h4.vote-rating').html('Current rating: ' + rating);
   })
 })

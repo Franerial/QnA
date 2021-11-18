@@ -9,6 +9,10 @@ class User < ApplicationRecord
   has_many :awards, dependent: :destroy
 
   def author_of?(post)
-    id == post.try(:author_id)
+    (id == post.try(:author_id)) || (id == post.try(:user_id))
+  end
+
+  def find_vote(votable)
+    Vote.find_by(user_id: id, votable_id: votable.id, votable_type: votable.class.name)
   end
 end

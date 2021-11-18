@@ -42,7 +42,7 @@ feature "User can vote for question", %q{
       visit question_path(question2)
 
       within ".question-vote" do
-        expect(page).to have_link "Cansel vote"
+        expect(page).to have_link "Cancel vote"
         expect(page).to_not have_link "Dislike"
         expect(page).to_not have_link "Like"
       end

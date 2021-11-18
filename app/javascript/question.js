@@ -37,10 +37,10 @@ $(document).on('turbolinks:load', function () {
 
     })
 
-  $('.question td.cansel-vote-link').on('ajax:success', function (event) {
+  $('.question td.cancel-vote-link').on('ajax:success', function (event) {
     rating = event.detail[0].rating;
 
-    $('.question td.cansel-vote-link').html('You have just canselled your vote!')
+    $('.question td.cancel-vote-link').html('You have just canselled your vote!')
     $('.question h4.vote-rating').html('Current rating: ' + rating);
   })
 })

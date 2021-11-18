@@ -42,7 +42,7 @@ feature "User can vote for answer", %q{
 
     scenario "can't vote twice for answer", js: true do
       within "#answer-li-#{answer3.id}" do
-        expect(page).to have_link "Cansel vote"
+        expect(page).to have_link "Cancel vote"
         expect(page).to_not have_link "Dislike"
         expect(page).to_not have_link "Like"
       end

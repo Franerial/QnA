@@ -22,7 +22,7 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
 
     respond_to do |format|
-      if @vote.user == current_user
+      if current_user.author_of?(@vote)
         @vote.destroy
 
         format.json do
