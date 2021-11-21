@@ -12,17 +12,49 @@ RSpec.describe User, type: :model do
 
     context "return true" do
       let(:question) { create(:question, author: user) }
+      let(:vote) { create(:vote, user: user) }
 
       it "user is the author of question" do
-        expect(user).to be_author_of(question)
+        expect(user.author_of?(question)).to be_truthy
+      end
+
+      it "user is the author of vote" do
+        expect(user.author_of?(vote)).to be_truthy
       end
     end
 
     context "return false" do
       let(:question) { create(:question) }
+      let(:vote) { create(:vote) }
 
       it "user is not the author of question" do
-        expect(user).not_to be_author_of(question)
+        expect(user.author_of?(question)).to be_falsey
+      end
+
+      it "user is not the author of vote" do
+        expect(user.author_of?(vote)).to be_falsey
+      end
+    end
+  end
+
+  describe "find_vote" do
+    let(:user) { create(:user) }
+
+    context "return vote" do
+      let(:question) { create(:question) }
+      let!(:vote) { create(:vote, user: user, votable: question) }
+
+      it "user has vote for question" do
+        expect(user.find_vote(question)).to eq vote
+      end
+    end
+
+    context "return nil" do
+      let(:question) { create(:question) }
+      let!(:vote) { create(:vote, user: user) }
+
+      it "user has no vote for question" do
+        expect(user.find_vote(question)).to be_nil
       end
     end
   end

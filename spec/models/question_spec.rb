@@ -12,6 +12,8 @@ RSpec.describe Question, type: :model do
   it { should accept_nested_attributes_for :links }
   it { should accept_nested_attributes_for :award }
 
+  it_behaves_like "votable"
+
   describe "public methods" do
     let(:question) { create(:question_with_answers, answers_count: 5) }
     let!(:award) { create(:award, question: question) }

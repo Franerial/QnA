@@ -1,0 +1,13 @@
+h4.vote-rating = "Current rating: #{resource.rating}"
+
+- if user_signed_in?
+  table
+    tr
+      - if current_user.find_vote(resource)
+        td.cancel-vote-link
+          = link_to "Cancel vote", vote_path( current_user.find_vote(resource) ), method: :delete, data: { confirm: 'Are you sure?',  type: :json}, remote: true
+      - else 
+        td.vote-link 
+          = link_to "Like", votes_path(votable_id: resource.id, status: 'like', votable: resource.class.name), method: :post, data: { type: :json }, remote: true
+        td.vote-link 
+          = link_to "Dislike", votes_path(votable_id: resource.id, status: 'dislike', votable: resource.class.name), method: :post, data: { type: :json }, remote: true

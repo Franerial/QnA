@@ -8,6 +8,8 @@ RSpec.describe Answer, type: :model do
 
   it { should accept_nested_attributes_for :links }
 
+  it_behaves_like "votable"
+
   describe "public methods" do
     let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
