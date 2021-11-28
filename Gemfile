@@ -35,6 +35,8 @@ gem "google-cloud-storage", "~> 1.34", ">= 1.34.1"
 
 gem "cocoon", "~> 1.2", ">= 1.2.15"
 
+gem "gon", "~> 6.4"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

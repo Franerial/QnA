@@ -3,5 +3,16 @@ $('.notice').html('');
 <% if @answer.persisted? %>
   $('textarea#answer_body').val('');
   $('.answers').children().append('<%= j render @answer %>');
+  $('#answer-li-' + <%= @answer.id %> + ' td.vote-link').on('ajax:success', processVote);
   $('.notice').append('<%= flash[:notice] %>');
 <% end %>
+
+function processVote(event) {
+  var vote = event.detail[0].vote;
+  var rating = event.detail[0].rating;
+  var answer_id = vote.votable_id;
+
+  $('#answer-li-' + answer_id + ' td.vote-link').first().remove();
+  $('#answer-li-' + answer_id + ' td.vote-link').last().html('<p> You ' + vote.status + ' this ' + vote.votable_type.toLowerCase() + '!</p>');
+  $('#answer-li-' + answer_id + ' h4.vote-rating').html('Current rating: ' + rating);
+}

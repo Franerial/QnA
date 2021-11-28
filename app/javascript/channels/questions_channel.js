@@ -1,17 +1,21 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("QuestionsChannel", {
-  connected() {
-    // Called when the subscription is ready for use on the server
-    console.log('connected to questions_channel!');
-    this.perform('follow');
-  },
+$(document).on('turbolinks:load', function () {
+  if ($(".questions-index-table").length) {
+    consumer.subscriptions.create("QuestionsChannel", {
+      connected() {
+        // Called when the subscription is ready for use on the server
+        console.log('connected to questions_channel!');
+        this.perform('follow');
+      },
 
-  disconnected() {
-    // Called when the subscription has been terminated by the server
-  },
+      disconnected() {
+        // Called when the subscription has been terminated by the server
+      },
 
-  received(data) {
-    $(".questions-index-table").children().append(data.question_item)
+      received(data) {
+        $(".questions-index-table").children().append(data.question_item)
+      }
+    });
   }
-});
+})
