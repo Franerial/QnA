@@ -20,6 +20,18 @@ $(document).on('turbolinks:load', function () {
   })
 })
 
+$(document).on('turbolinks:load', function () {
+  $('.answers').on('click', '.add-comment', function (event) {
+    event.preventDefault();
+    $(this).hide();
+
+    var answerId = $(this).data('answerId');
+
+    $('#answer-' + answerId + '-comments form').show();
+    $('#answer-' + answerId + '-comments form textarea').val('');
+  })
+})
+
 function processVote(event) {
   var vote = event.detail[0].vote;
   var rating = event.detail[0].rating;

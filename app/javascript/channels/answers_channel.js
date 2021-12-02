@@ -25,7 +25,6 @@ $(document).on('turbolinks:load', function () {
           }
 
           if (gon.user_id == data.question_author_id) {
-            console.log('user is the author of question case in action!');
             $('#answer-li-' + data.answer_id + ' p.mark-best-link').show();
           }
 

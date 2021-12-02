@@ -1,0 +1,12 @@
+$('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments .comment-errors').html('<%= render 'shared/errors', resource: @comment %>');
+
+<% if @comment.persisted? %>
+  $('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments form').hide();
+
+  if (!$('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments h4').length) {
+     $('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments').prepend("<h4> Comments: </h4>");
+  }
+
+  $('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments ul').append('<%= j render @comment %>');
+  $('#<%= @comment.commentable_type.underscore %>-<%= @comment.commentable_id %>-comments a.add-comment').show();
+<% end %>

@@ -36,7 +36,15 @@
     = render 'shared/attached_award', resource: @question.award
   .question-vote
     = render 'shared/vote', resource: @question
-  
+  div id="question-#{@question.id}-comments"
+    ul
+      = render @question.comments
+    - if @question.comments.first
+        h4 = "Comments:"
+    - if user_signed_in?     
+        p = link_to 'Add comment', "#", class: "add-comment", data: { question_id: @question.id }
+        = render 'comments/form', commentable: @question 
+
 h2 = "Answers list"
 .answer-errors
 .answers
