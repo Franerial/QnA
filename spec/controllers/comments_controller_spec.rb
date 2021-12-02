@@ -17,7 +17,12 @@ RSpec.describe CommentsController, type: :controller do
           post :create, params: { comment: { body: "Comment" }, commentable_id: question.id, commentable_type: question.class.name }, format: :js
           expect(response).to render_template :create
         end
+
+        it "broadcasts to commets channel" do
+          expect { post :create, params: { comment: { body: "Comment" }, commentable_id: question.id, commentable_type: question.class.name }, format: :js }.to have_broadcasted_to("comments").with(Comment.last)
+        end
       end
+
       context "with invalid attributes" do
         it "doesn't save comment" do
           expect { post :create, params: { comment: { body: "" }, commentable_id: question.id, commentable_type: question.class.name }, format: :js }.to_not change(question.comments, :count)
@@ -29,6 +34,7 @@ RSpec.describe CommentsController, type: :controller do
         end
       end
     end
+
     describe "Unauthenticated user" do
       it "doesn't save comment" do
         expect { post :create, params: { comment: { body: "Comment" }, commentable_id: question.id, commentable_type: question.class.name }, format: :js }.to_not change(question.comments, :count)
