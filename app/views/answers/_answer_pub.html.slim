@@ -1,0 +1,27 @@
+li id="answer-li-#{answer.id}"
+  p = answer.body
+  p.mark-best-link.hidden = link_to 'Mark answer as best', mark_answer_as_best_question_path(answer.question, answer_id: answer.id), method: :patch
+  - if answer.files.attached?
+      h4 = "Files attached:"
+      table
+        - answer.files.each do |file|
+          tr
+            td
+              = link_to file.filename.to_s, url_for(file)
+  .answer-links
+    - if answer.links.first
+      h4 = "Links attached:"
+      ul
+        - answer.links.each do |link|
+          - if link.gist?
+              li = javascript_include_tag link.url+".js"
+          - else 
+              li = link_to link.name, link.url
+  .answer-vote            
+    h4.vote-rating = "Current rating: #{answer.rating}"
+    table
+      tr
+        td.vote-link.hidden 
+          = link_to "Like", votes_path(votable_id: answer.id, status: 'like', votable: "Answer"), method: :post, data: { type: :json }, remote: true
+        td.vote-link.hidden 
+          = link_to "Dislike", votes_path(votable_id: answer.id, status: 'dislike', votable: "Answer"), method: :post, data: { type: :json }, remote: true

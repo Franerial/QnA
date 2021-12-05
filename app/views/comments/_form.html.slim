@@ -1,0 +1,8 @@
+.comment-errors
+= form_with model: Comment.new, class: 'hidden', local: false do |f|
+  p
+    = f.label :body
+    = f.text_area :body
+  = hidden_field_tag :commentable_type, commentable.class
+  = hidden_field_tag :commentable_id, commentable.id
+  = f.submit 'Add comment'

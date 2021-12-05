@@ -44,3 +44,15 @@ $(document).on('turbolinks:load', function () {
     $('.question h4.vote-rating').html('Current rating: ' + rating);
   })
 })
+
+$(document).on('turbolinks:load', function () {
+  $('.question').on('click', '.add-comment', function (event) {
+    event.preventDefault();
+    $(this).hide();
+
+    var questionId = $(this).data('questionId');
+
+    $('#question-' + questionId + '-comments form').show();
+    $('#question-' + questionId + '-comments form textarea').val('');
+  })
+})

@@ -23,3 +23,11 @@ li id="answer-li-#{answer.id}"
     = render 'shared/attached_links', resource: answer
   .answer-vote 
     = render 'shared/vote', resource: answer
+  div id="answer-#{answer.id}-comments"
+    - if answer.comments.first
+      h4 = "Comments:"
+    ul 
+      = render answer.comments
+    - if user_signed_in?     
+        p = link_to 'Add comment', "#", class: "add-comment", data: { answer_id: answer.id }
+        = render 'comments/form', commentable: answer

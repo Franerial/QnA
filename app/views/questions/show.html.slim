@@ -36,7 +36,15 @@
     = render 'shared/attached_award', resource: @question.award
   .question-vote
     = render 'shared/vote', resource: @question
-  
+  div id="question-#{@question.id}-comments"
+    - if @question.comments.first
+        h4 = "Comments:"
+    ul
+      = render @question.comments
+    - if user_signed_in?     
+        p = link_to 'Add comment', "#", class: "add-comment", data: { question_id: @question.id }
+        = render 'comments/form', commentable: @question 
+
 h2 = "Answers list"
 .answer-errors
 .answers
@@ -46,21 +54,22 @@ h2 = "Answers list"
         = render @best_answer
     = render @other_answers
 
-h2 Create new answer
-.answer-errors-create
-= form_with model: [@question, @answer], local: false do |f|
-  = f.label :body
-  = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true
-  p Links: 
-  p 
-    = f.fields_for :links do |link|
-      = render 'link_fields', f: link
-    .links
-      = link_to_add_association 'Add link', f, :links
-  = f.submit 'Create'
+- if current_user
+    h2 Create new answer
+    .answer-errors-create
+    = form_with model: [@question, @answer], local: false do |f|
+      = f.label :body
+      = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true
+      p Links: 
+      p 
+        = f.fields_for :links do |link|
+          = render 'link_fields', f: link
+        .links
+          = link_to_add_association 'Add link', f, :links
+      = f.submit 'Create'
 
 p = link_to 'Back to questions list', questions_path
 
