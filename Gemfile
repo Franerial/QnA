@@ -19,7 +19,7 @@ gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
-gem "devise", "~> 4.8"
+gem "devise", "~> 4.8", github: "heartcombo/devise"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem "jquery-rails", "~> 4.4"
@@ -36,6 +36,12 @@ gem "google-cloud-storage", "~> 1.34", ">= 1.34.1"
 gem "cocoon", "~> 1.2", ">= 1.2.15"
 
 gem "gon", "~> 6.4"
+
+gem "omniauth", "~> 2.0", ">= 2.0.4"
+
+gem "omniauth-github", "~> 2.0"
+
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
