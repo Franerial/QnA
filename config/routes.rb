@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :awards, only: :index
   resources :votes, only: %i[create destroy]
   resources :comments, only: :create
+  resources :users, only: %i[edit update]
 
   resources :questions do
     resources :answers, shallow: true

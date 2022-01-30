@@ -37,32 +37,67 @@ RSpec.describe FindForOauth do
     end
 
     context "user doesn't exists" do
-      let(:auth) { OmniAuth::AuthHash.new(provider: "facebook", uid: "1234", info: { email: "new@user.com" }) }
+      context "when auth has email" do
+        let(:auth) { OmniAuth::AuthHash.new(provider: "facebook", uid: "1234", info: { email: "new@user.com" }) }
 
-      it "creates new user" do
-        expect { subject.call }.to change(User, :count).by(1)
+        it "creates new user" do
+          expect { subject.call }.to change(User, :count).by(1)
+        end
+
+        it "returns the user" do
+          expect(subject.call).to be_a(User)
+        end
+
+        it "fills user email" do
+          user = subject.call
+          expect(user.email).to eq auth.info[:email]
+        end
+
+        it "creates authorization for user" do
+          user = subject.call
+
+          expect(user.authorizations).to_not be_empty
+        end
+
+        it "creates authorization with provider and uid" do
+          authorization = subject.call.authorizations.first
+
+          expect(authorization.provider).to eq auth.provider
+          expect(authorization.uid).to eq auth.uid
+        end
       end
 
-      it "returns the user" do
-        expect(subject.call).to be_a(User)
-      end
+      context "when auth hasn't email" do
+        let(:auth) { OmniAuth::AuthHash.new(provider: "vkontakte", uid: "1234", info: {}) }
 
-      it "fills user email" do
-        user = subject.call
-        expect(user.email).to eq auth.info[:email]
-      end
+        it "does create new user" do
+          expect { subject.call }.to change(User, :count).by(1)
+        end
 
-      it "creates authorization for user" do
-        user = subject.call
+        it "returns new user" do
+          expect(subject.call).to be_a(User)
+        end
 
-        expect(user.authorizations).to_not be_empty
-      end
+        it "returns unconfirmed user" do
+          expect(subject.call).not_to be_confirmed
+        end
 
-      it "creates authorization with provider and uid" do
-        authorization = subject.call.authorizations.first
+        it "returns user with empty email" do
+          expect(subject.call.email).to be_empty
+        end
 
-        expect(authorization.provider).to eq auth.provider
-        expect(authorization.uid).to eq auth.uid
+        it "creates authorization for user" do
+          user = subject.call
+
+          expect(user.authorizations).to_not be_empty
+        end
+
+        it "creates authorization with provider and uid" do
+          authorization = subject.call.authorizations.first
+
+          expect(authorization.provider).to eq auth.provider
+          expect(authorization.uid).to eq auth.uid
+        end
       end
     end
   end
