@@ -7,6 +7,7 @@ FactoryBot.define do
     email
     password { "123456789" }
     password_confirmation { "123456789" }
+    confirmed_at { Time.current }
 
     transient do
       questions_count { 5 }
