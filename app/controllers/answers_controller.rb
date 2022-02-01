@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %i[destroy update]
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def create
     @answer = @question.answers.build(answer_params)
     @answer.author_id = current_user.id
@@ -16,23 +18,15 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      flash.now[:notice] = "Your answer successfully updated."
-    else
-      flash.now[:notice] = "You do not have permission to do that."
-    end
+    @answer.update(answer_params)
+    flash.now[:notice] = "Your answer successfully updated."
 
     @question = @answer.question
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash.now[:notice] = "Your answer was successfully deleted."
-    else
-      flash.now[:notice] = "You do not have permission to do that."
-    end
+    @answer.destroy
+    flash.now[:notice] = "Your answer was successfully deleted."
   end
 
   private

@@ -4,11 +4,8 @@ class FilesAttachmentController < ApplicationController
   def destroy
     @file = ActiveStorage::Attachment.find(params[:id])
 
-    if current_user.author_of?(@file.record)
-      @file.purge
-    else
-      flash.now[:notice] = "You do not have permission to do that."
-    end
+    authorize! :destroy, @file.record
+    @file.purge
 
     if @file.record.instance_of?(Answer)
       redirect_to @file.record.question

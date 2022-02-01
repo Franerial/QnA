@@ -49,6 +49,8 @@ gem "letter_opener", "~> 1.7"
 
 gem "capybara-email", "~> 3.0", ">= 3.0.2"
 
+gem "cancancan", "~> 3.3"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

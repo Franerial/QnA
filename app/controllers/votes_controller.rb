@@ -1,6 +1,9 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_votable, only: :create
+  before_action :set_vote, only: :destroy
+
+  authorize_resource
 
   def create
     @vote = @votable.votes.build(user: current_user, status: params[:status]&.to_sym)
@@ -19,19 +22,11 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @vote = Vote.find(params[:id])
-
     respond_to do |format|
-      if current_user.author_of?(@vote)
-        @vote.destroy
+      @vote.destroy
 
-        format.json do
-          render json: { rating: @vote.votable.rating, votable_id: @vote.votable.id }, status: :ok
-        end
-      else
-        format.json do
-          head :forbidden
-        end
+      format.json do
+        render json: { rating: @vote.votable.rating, votable_id: @vote.votable.id }, status: :ok
       end
     end
   end
@@ -40,5 +35,9 @@ class VotesController < ApplicationController
 
   def find_votable
     @votable = params[:votable].constantize.find(params[:votable_id])
+  end
+
+  def set_vote
+    @vote = Vote.find(params[:id])
   end
 end

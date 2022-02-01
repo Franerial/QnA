@@ -29,9 +29,8 @@ RSpec.describe LinksController, type: :controller do
         expect { delete :destroy, params: { id: link } }.to_not change(question.links, :count)
       end
 
-      it "redirect to linkable with notice" do
+      it "should display flash notice" do
         delete :destroy, params: { id: link }
-        expect(response).to redirect_to link.linkable
         expect(flash[:notice]).to be_present
       end
     end

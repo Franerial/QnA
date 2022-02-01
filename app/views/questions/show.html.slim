@@ -2,7 +2,7 @@
   .question-errors
   h1 Question title
   h3 id="question-title-#{@question.id}" = @question.title
-  - if current_user&.author_of?(@question)
+  - if can?(:update, @question)
     p = link_to 'Edit title', "#", class: "edit-question-title-link", data: { question_id: @question.id }
     = form_with model: @question, local: false, class: 'hidden', html: {id: "edit-question-title-#{@question.id}"} do |f|
       = f.label :title
@@ -11,7 +11,7 @@
 
   h1 Question body
   h3 id="question-body-#{@question.id}" = @question.body
-  - if current_user&.author_of?(@question)
+  - if can?(:update, @question)
     p = link_to 'Edit body', "#", class: "edit-question-body-link", data: { question_id: @question.id }
     = form_with model: @question, local: false, class: 'hidden', html: {id: "edit-question-body-#{@question.id}"} do |f|
       = f.label :body
@@ -73,5 +73,5 @@ h2 = "Answers list"
 
 p = link_to 'Back to questions list', questions_path
 
-- if current_user&.author_of?(@question)
+- if can?(:destroy, @question)
   p = link_to 'Delete', question_path(@question), method: :delete, data: { confirm: "Are you sure?" }

@@ -60,9 +60,8 @@ RSpec.describe AnswersController, type: :controller do
         expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
       end
 
-      it "render destroy view" do
+      it "should display flash notice" do
         delete :destroy, params: { id: answer }, format: :js
-        expect(response).to render_template :destroy
         expect(flash[:notice]).to be_present
       end
     end

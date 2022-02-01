@@ -1,7 +1,9 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy, :mark_as_best]
+  before_action :load_question, only: [:show, :update, :destroy, :mark_as_best]
   after_action :publish_question, only: :create
+
+  authorize_resource
 
   def index
     @questions = Question.all
@@ -20,9 +22,6 @@ class QuestionsController < ApplicationController
     @question.build_award
   end
 
-  def edit
-  end
-
   def create
     @question = current_user.questions.build(question_params)
 
@@ -34,30 +33,18 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@question)
-      @question.update(question_params)
-      flash.now[:notice] = "Your question successfully updated."
-    else
-      flash.now[:notice] = "You do not have permission to do that."
-    end
+    @question.update(question_params)
+    flash.now[:notice] = "Your question successfully updated."
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: "Your question was successfully deleted."
-    else
-      redirect_to questions_path
-    end
+    @question.destroy
+    redirect_to questions_path, notice: "Your question was successfully deleted."
   end
 
   def mark_as_best
-    if current_user.author_of?(@question)
-      @question.set_best_answer(params[:answer_id])
-      redirect_to @question
-    else
-      redirect_to @question, notice: "You do not have permission to do that."
-    end
+    @question.set_best_answer(params[:answer_id])
+    redirect_to @question
   end
 
   private
