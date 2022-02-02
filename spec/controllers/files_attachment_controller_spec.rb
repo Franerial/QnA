@@ -33,9 +33,8 @@ RSpec.describe FilesAttachmentController, type: :controller do
         expect { delete :destroy, params: { id: question.files.first } }.to_not change(question.files, :count)
       end
 
-      it "redirect to the same page with notice" do
+      it "should display flash notice" do
         delete :destroy, params: { id: question.files.first }
-        expect(response).to redirect_to question.files.first.record
         expect(flash[:notice]).to be_present
       end
     end
