@@ -51,6 +51,12 @@ gem "capybara-email", "~> 3.0", ">= 3.0.2"
 
 gem "cancancan", "~> 3.3"
 
+gem "doorkeeper", "~> 5.5", ">= 5.5.4"
+
+gem "active_model_serializers", "~> 0.10.13"
+
+gem "oj", "~> 3.13", ">= 3.13.11"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
