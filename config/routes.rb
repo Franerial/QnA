@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       end
 
       resources :questions do
-        resources :answers, only: %i[index show], shallow: true
+        resources :answers, shallow: true
       end
     end
   end

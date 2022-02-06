@@ -1,7 +1,5 @@
 RSpec.shared_examples "API create resource" do
   describe "authorized" do
-    let(:user) { User.find(access_token.resource_owner_id) }
-
     context "with valid params" do
       subject { do_request(method, api_path, params: valid_params.merge(access_token: access_token.token), headers: headers) }
 
