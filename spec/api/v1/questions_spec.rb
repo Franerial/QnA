@@ -1,9 +1,10 @@
 require "rails_helper"
 
 describe "Questions API", type: :request do
-  let(:headers) do
-    { "ACCEPT" => "application/json", "CONTENT_TYPE" => "application/json" }
-  end
+  let(:headers) { { "ACCEPT" => "application/json" } }
+  let(:access_token) { create(:access_token) }
+  let(:user) { User.find(access_token.resource_owner_id) }
+  let(:resource_class) { Question }
 
   describe "GET /api/v1/questions" do
     it_behaves_like "API Authorizable" do
@@ -12,7 +13,6 @@ describe "Questions API", type: :request do
     end
 
     context "authorized" do
-      let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
       let(:question_responce) { json["questions"].first }
@@ -23,7 +23,7 @@ describe "Questions API", type: :request do
         expect(response).to be_successful
       end
 
-      it "returns list of qustions" do
+      it "returns list of questions" do
         expect(json["questions"].size).to eq 2
       end
 
@@ -49,17 +49,13 @@ describe "Questions API", type: :request do
 
   describe "GET /api/v1/questions/:id" do
     let!(:question) { create(:question) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:method) { :get }
 
-    it_behaves_like "API Authorizable" do
-      let(:api_path) { "/api/v1/questions/#{question.id}" }
-      let(:method) { :get }
-    end
+    it_behaves_like "API Authorizable"
 
     context "authorized" do
-      let!(:access_token) { create(:access_token) }
       let(:resource) { question }
-      let(:api_path) { "/api/v1/questions/#{question.id}" }
-      let(:method) { :get }
 
       it_behaves_like "API commentable"
 
@@ -106,5 +102,43 @@ describe "Questions API", type: :request do
         end
       end
     end
+  end
+
+  describe "POST /api/v1/questions" do
+    let(:api_path) { "/api/v1/questions" }
+    let(:method) { :post }
+
+    it_behaves_like "API Authorizable"
+
+    it_behaves_like "API create resource" do
+      let(:valid_params) { { question: attributes_for(:question) } }
+      let(:invalid_params) { { question: attributes_for(:question, :invalid) } }
+    end
+  end
+
+  describe "PATCH /api/v1/questions/:id" do
+    let(:resource) { create(:question, author: user) }
+    let(:api_path) { "/api/v1/questions/#{resource.id}" }
+    let(:method) { :patch }
+
+    it_behaves_like "API Authorizable"
+
+    it_behaves_like "API update resource" do
+      let(:valid_update_attributes) { { title: "Edited title", body: "Edited body" } }
+      let(:valid_params) { { question: valid_update_attributes } }
+
+      let(:invalid_update_attributes) { { title: "Edited title", body: "" } }
+      let(:invalid_params) { { question: invalid_update_attributes } }
+    end
+  end
+
+  describe "DELETE /api/v1/questions/:id" do
+    let!(:resource) { create(:question, author: user) }
+    let(:api_path) { "/api/v1/questions/#{resource.id}" }
+    let(:method) { :delete }
+
+    it_behaves_like "API Authorizable"
+
+    it_behaves_like "API destroy resource"
   end
 end
