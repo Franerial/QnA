@@ -16,7 +16,6 @@ describe "Questions API", type: :request do
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
       let(:question_responce) { json["questions"].first }
-      let!(:answers) { create_list(:answer, 3, question: question) }
 
       before { get "/api/v1/questions", params: { access_token: access_token.token }, headers: headers }
 
@@ -28,8 +27,8 @@ describe "Questions API", type: :request do
         expect(json["questions"].size).to eq 2
       end
 
-      it "returns all public fields" do
-        %w[id title body created_at updated_at].each do |attr|
+      it "returns all questions public fields" do
+        %w[id title body rating created_at updated_at].each do |attr|
           expect(question_responce[attr]).to eq question.send(attr).as_json
         end
       end
@@ -42,19 +41,8 @@ describe "Questions API", type: :request do
         expect(question_responce["short_title"]).to eq question.title.truncate(7)
       end
 
-      describe "answers" do
-        let(:answer) { answers.first }
-        let(:answer_responce) { question_responce["answers"].first }
-
-        it "returns list of answers" do
-          expect(question_responce["answers"].size).to eq 3
-        end
-
-        it "returns all public fields" do
-          %w[id body author_id created_at updated_at].each do |attr|
-            expect(answer_responce[attr]).to eq answer.send(attr).as_json
-          end
-        end
+      it "contains best answer object" do
+        expect(question_responce["best_answer"]).to eq question.best_answer
       end
     end
   end
@@ -85,9 +73,36 @@ describe "Questions API", type: :request do
         expect(response).to be_successful
       end
 
-      it "returns all question fields" do
-        %w[id title body created_at updated_at].each do |attr|
+      it "returns all public question fields" do
+        %w[id title body rating created_at updated_at].each do |attr|
           expect(json["question"][attr]).to eq question.send(attr).as_json
+        end
+      end
+
+      it "contains user object" do
+        expect(json["question"]["author"]["id"]).to eq question.author.id
+      end
+
+      it "contains best answer object" do
+        expect(json["question"]["best_answer"]).to eq question.best_answer
+      end
+
+      describe "answers" do
+        let!(:answers) { create_list(:answer, 3, question: question) }
+        let(:answer) { answers.first }
+        let(:question_responce) { json["question"] }
+        let(:answer_responce) { question_responce["answers"].first }
+
+        before { get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }, headers: headers }
+
+        it "returns list of answers" do
+          expect(question_responce["answers"].size).to eq 3
+        end
+
+        it "returns all answers public fields" do
+          %w[id body rating created_at updated_at].each do |attr|
+            expect(answer_responce[attr]).to eq answer.send(attr).as_json
+          end
         end
       end
     end
