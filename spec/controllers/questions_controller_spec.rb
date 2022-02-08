@@ -88,58 +88,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "PATCH #update" do
-    before { login(user) }
-
-    context "User is the author of question" do
-      let!(:question) { create(:question, author: user) }
-
-      context "with valid attributes" do
-        it "assigns the requested question to @question" do
-          patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
-          expect(assigns(:question)).to eq question
-        end
-
-        it "changes question attributes" do
-          patch :update, params: { id: question, question: { title: "new title", body: "new body" } }, format: :js
-          question.reload
-
-          expect(question.title).to eq "new title"
-          expect(question.body).to eq "new body"
-        end
-
-        it "render update view" do
-          patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
-          expect(response).to render_template :update
-        end
-      end
-
-      context "with invalid attributes" do
-        before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
-
-        it "does not change question" do
-          question.reload
-
-          expect(question.title).to eq "MyString"
-          expect(question.body).to eq "MyText"
-        end
-
-        it "render update view" do
-          expect(response).to render_template :update
-        end
-      end
-    end
-
-    context "User is not the author of question" do
-      it "does not change question attributes" do
-        expect do
-          patch :update, params: { id: question, question: { body: "new body" } }, format: :js
-        end.to_not change(question, :body)
-      end
-
-      it "shows flash error message" do
-        patch :update, params: { id: question, question: { body: "new body" } }, format: :js
-        expect(flash[:notice]).to be_present
-      end
+    it_behaves_like "update resource" do
+      let!(:resource) { create :question, author: user }
+      let(:update_attributes) { { title: "Edited title", body: "Edited body" } }
+      let(:invalid_attributes) { { title: " ", body: "Edited body" } }
     end
   end
 
