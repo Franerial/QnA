@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:awards).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   describe "author_of?" do
     let(:user) { create(:user) }
@@ -70,6 +71,26 @@ RSpec.describe User, type: :model do
       expect(FindForOauth).to receive(:new).with(auth).and_return(service)
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
+    end
+  end
+
+  describe "#subscribed?" do
+    let(:user) { create :user }
+
+    let(:question) { create :question }
+
+    context "return true" do
+      before { question.subscriptions.create!(user: user) }
+
+      it "if user is subscribed to resource" do
+        expect(user.subscribed?(question)).to be true
+      end
+    end
+
+    context "return false" do
+      it "if user is not subscribed to resource" do
+        expect(user.subscribed?(question)).to be false
+      end
     end
   end
 end

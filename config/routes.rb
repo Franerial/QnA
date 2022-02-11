@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :votes, only: %i[create destroy]
   resources :comments, only: :create
   resources :users, only: %i[edit update]
+  resources :subscriptions, only: %i[create destroy]
 
   resources :questions do
     resources :answers, shallow: true

@@ -44,6 +44,9 @@
     - if user_signed_in?     
         p = link_to 'Add comment', "#", class: "add-comment", data: { question_id: @question.id }
         = render 'comments/form', commentable: @question 
+  .question-subscribed 
+    - if user_signed_in?
+      = render 'shared/subscription', resource: @question
 
 h2 = "Answers list"
 .answer-errors

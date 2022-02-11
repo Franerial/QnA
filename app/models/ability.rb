@@ -31,7 +31,7 @@ class Ability
     can :update, [Question, Answer], author_id: user.id
 
     can :destroy, [Question, Answer, Link, ActiveStorage::Attachment], author_id: user.id
-    can :destroy, Vote, user_id: user.id
+    can :destroy, [Vote, Subscription], user_id: user.id
 
     can :mark_as_best, Question, author_id: user.id
   end
