@@ -13,8 +13,15 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   before_destroy :clear_best_answer
+  after_create :send_notification
 
   def clear_best_answer
     question.update(best_answer_id: nil)
+  end
+
+  private
+
+  def send_notification
+    Notification.send_new_answer(self)
   end
 end
