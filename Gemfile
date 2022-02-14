@@ -63,6 +63,10 @@ gem "sinatra", "~> 2.1", require: false
 
 gem "whenever", "~> 1.0", require: false
 
+gem "mysql2", "~> 0.5.3"
+
+gem "thinking-sphinx", "~> 5.4"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
@@ -90,6 +94,7 @@ group :test do
   gem "shoulda-matchers", "~> 5.0"
   gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
   gem "launchy", "~> 2.5"
+  gem "database_cleaner", "~> 2.0", ">= 2.0.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

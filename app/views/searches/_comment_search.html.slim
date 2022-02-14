@@ -1,0 +1,8 @@
+li 
+  h4 Type: Comment
+  p = resource.body
+  p = "Author: #{resource.user.email}"
+  - if resource.commentable.instance_of?(Question)
+    p = link_to 'View corresponding question', question_path(resource.commentable)
+  - else 
+    p = link_to 'View corresponding answer', question_path(resource.commentable.question)
