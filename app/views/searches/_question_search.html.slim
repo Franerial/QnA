@@ -1,0 +1,6 @@
+li 
+  h4 Type: Question
+  p = resource.title
+  p = resource.body
+  p = "Author: #{resource.author.email}"
+  p = link_to 'View question', question_path(resource)

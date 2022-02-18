@@ -1,0 +1,5 @@
+li 
+  h4 Type: Answer
+  p = resource.body
+  p = "Author: #{resource.author.email}"
+  p = link_to 'View corresponding question', question_path(resource.question)

@@ -1,0 +1,4 @@
+- resources.each do |resource|
+  p
+    = f.label resource
+    = f.check_box :resources, { multiple: true} , resource, nil

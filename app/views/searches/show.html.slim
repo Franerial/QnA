@@ -1,0 +1,23 @@
+= form_with url: search_path, method: :get, local: true do |f|
+  p
+    = f.label :query
+    = f.text_field :query
+  p  
+    p = "Select resources to search in:"
+    = render partial: "resources_checkboxes", locals: {f: f, resources: %w[question answer comment user] }
+  p  
+    = f.submit 'Search'
+
+- if params[:query].present?
+  - if @records.nil?
+    h2 You should choose resources to search in
+  - else
+    - if @records.any?
+      h2 Results:
+      ol
+        - @records.each do |record|
+          = render partial: "#{record.class.name.downcase}_search", object: record, locals: {resource: record}
+    - else
+      h2 No entries found
+
+p = link_to 'Back to questions list', questions_path
