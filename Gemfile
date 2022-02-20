@@ -67,7 +67,7 @@ gem "mysql2", "~> 0.5.3"
 
 gem "thinking-sphinx", "~> 5.4"
 
-gem "mini_racer", "~> 0.6.2"
+gem "mini_racer"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
