@@ -67,7 +67,7 @@ gem "mysql2", "~> 0.5.3"
 
 gem "thinking-sphinx", "~> 5.4"
 
-gem "mini_racer"
+gem "mini_racer", "~> 0.6.2"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -91,6 +91,7 @@ group :development do
   gem "capistrano-rails", "~> 1.6", ">= 1.6.1", require: false
   gem "capistrano-rvm", "~> 0.1.2", require: false
   gem "capistrano-passenger", "~> 0.2.1", require: false
+  gem "capistrano-sidekiq", "~> 2.0", require: false
 end
 
 group :test do
