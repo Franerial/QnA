@@ -18,4 +18,6 @@ set :rvm_custom_path, "/usr/share/rvm"
 
 set :pty, false
 
+set :sidekiq_pid, File.join(shared_path, "tmp", "pids", "sidekiq.pid")
+
 after "deploy:publishing", "unicorn:restart"
