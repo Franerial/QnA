@@ -17,3 +17,5 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 set :rvm_custom_path, "/usr/share/rvm"
 
 set :pty, false
+
+after "deploy:publishing", "unicorn:restart"

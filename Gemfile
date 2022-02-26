@@ -69,6 +69,8 @@ gem "thinking-sphinx", "~> 5.4"
 
 gem "mini_racer", "~> 0.6.2"
 
+gem "unicorn", "~> 6.1"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
@@ -92,6 +94,7 @@ group :development do
   gem "capistrano-rvm", "~> 0.1.2", require: false
   gem "capistrano-passenger", "~> 0.2.1", require: false
   gem "capistrano-sidekiq", "~> 2.0", require: false
+  gem "capistrano3-unicorn", "~> 0.2.1", require: false
 end
 
 group :test do
