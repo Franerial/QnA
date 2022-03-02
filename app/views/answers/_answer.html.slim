@@ -1,33 +1,34 @@
-li id="answer-li-#{answer.id}"
-  p = answer.body
-  - if (can? :destroy, answer) && (can? :update, answer)
-    p = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: "Are you sure?" }, remote: true
-    p = link_to "Edit", "#", class: "edit-answer-link", data: { answer_id: answer.id }
-    = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
-      = f.label :body
-      = f.text_area :body
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true
-      p Links: 
-      p 
-        = f.fields_for :links do |link|
-          = render 'link_fields', f: link
-        .links
-          = link_to_add_association 'Add link', f, :links
-      = f.submit 'Save'
-  - if can?(:mark_as_best, @question)
-    p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
-  = render 'shared/attached_files', resource: answer
-  .answer-links
-    = render 'shared/attached_links', resource: answer
-  .answer-vote 
-    = render 'shared/vote', resource: answer
-  div id="answer-#{answer.id}-comments"
-    - if answer.comments.first
-      h4 = "Comments:"
-    ul 
-      = render answer.comments
-    - if user_signed_in?     
-        p = link_to 'Add comment', "#", class: "add-comment", data: { answer_id: answer.id }
-        = render 'comments/form', commentable: answer
+- cache answer do
+  li id="answer-li-#{answer.id}"
+    p = answer.body
+    - if (can? :destroy, answer) && (can? :update, answer)
+      p = link_to 'Delete answer', answer_path(answer), method: :delete, data: { confirm: "Are you sure?" }, remote: true
+      p = link_to "Edit", "#", class: "edit-answer-link", data: { answer_id: answer.id }
+      = form_with model: answer, local: false, class: 'hidden', html: {id: "edit-answer-#{answer.id}"} do |f|
+        = f.label :body
+        = f.text_area :body
+        p
+          = f.label :files
+          = f.file_field :files, multiple: true
+        p Links: 
+        p 
+          = f.fields_for :links do |link|
+            = render 'link_fields', f: link
+          .links
+            = link_to_add_association 'Add link', f, :links
+        = f.submit 'Save'
+    - if can?(:mark_as_best, @question)
+      p = link_to 'Mark answer as best', mark_answer_as_best_question_path(@question, answer_id: answer.id), method: :patch
+    = render 'shared/attached_files', resource: answer
+    .answer-links
+      = render 'shared/attached_links', resource: answer
+    .answer-vote 
+      = render 'shared/vote', resource: answer
+    div id="answer-#{answer.id}-comments"
+      - if answer.comments.first
+        h4 = "Comments:"
+      ul 
+        = render answer.comments
+      - if user_signed_in?     
+          p = link_to 'Add comment', "#", class: "add-comment", data: { answer_id: answer.id }
+          = render 'comments/form', commentable: answer
