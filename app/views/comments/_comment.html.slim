@@ -1,3 +1,4 @@
-li id="comment-#{comment.id}"
-  p = comment.body 
-  p = "Author: #{comment.user.email}"
+- cache comment do
+  li id="comment-#{comment.id}"
+    p = comment.body 
+    p = "Author: #{comment.user.email}"

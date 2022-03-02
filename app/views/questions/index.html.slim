@@ -2,15 +2,16 @@ p= link_to 'Ask question', new_question_path
 
 h2 Questions list
 
-table class="questions-index-table"
-  tr
-    th
-      p Question title
-    th
-      p Question Body
-    th 
-      p View question
-  = render @questions
+-cache collection_cache_helper_for :question do
+  table class="questions-index-table"
+    tr
+      th
+        p Question title
+      th
+        p Question Body
+      th 
+        p View question
+    = render @questions
 
 - if current_user
   p = link_to 'View Awards', awards_path
