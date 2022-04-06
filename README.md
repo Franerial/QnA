@@ -25,5 +25,6 @@
 *  Doorkeeper and active model serializers for defining API and authorization code flow
 *  Google cloud storage for storing attached files
 *  Javascript/Jquery/Json/Ajax for vote system
+*  Fragment Caching
 *  Rspec for unit tests
 *  Capybara for acceptance tests
